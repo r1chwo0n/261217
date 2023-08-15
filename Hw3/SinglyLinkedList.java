@@ -110,41 +110,26 @@ public class SinglyLinkedList {
             System.out.println("ERROR");
             return new Node("Empty List!");
         } else {
-            if (head.student_id == id){
-                /*ถ้าอยากลบ node ตัวแรกทิ้ง ให้ประกาศ temp เข้ามาเพื่อจำสิ่งที่ head ชี้
-                แล้วทำการลบตัวแรกสุดทิ้งโดยการ popFront ออก แล้ว return temp ที่เก็บ node
-                แรกเอาไว้เมื่อกี้*/
-                Node temp = head;
-                popFront();
-                return temp;
-            }else{
-                Node cur = head;
-                Node temp = head;
-                while(cur.student_id != id && cur.next != null){
-                    /*while loop เพื่อทำให้ cur ไปชี้ตัวที่มี student_id = id ที่เรารับมา
-                    แล้วให้ temp ชี้ไปที่ตัวก่อนหน้า cur และถ้า cur ชี้ที่ตัวสุดท้ายก็จะหลุด loop
-                    เช่นกัน*/
-                    temp = cur;
-                    cur = cur.next;
-                }
-                if(cur.student_id == id && cur.next != null){
-                    /*ถ้า node ที่ต้องการจะลบไม่ใช่ node สุดท้าย ให้สร้าง node del ขึ้นมาเพื่อ 
-                    copy node ที่ต้องการจะลบ ให้ตัวก่อนหน้าชี้ไปยังถัดจากตัวที่ต้องการจะลบ และให้
-                    ตัวที่เราต้องการลบชี้ลง null ไปเลย แล้ว return node ที่เราต้องการลบออกมา
-                    */
-                    Node del = cur;
-                    temp.next = cur.next;
-                    cur.next = null;
-                    return del;
-                }else if(cur.student_id == id && cur.next == null){
-                    /*ถ้า node ที่เราต้องการลบเป็น node สุดท้าย ให้ตัวก่อนหน้าชี้ลง null ไปเลย
-                    แล้ว return node ที่เราต้องการลบออกมา*/
-                    temp.next = null;
-                    return cur;
-                }else{
-                    return new Node("Student Not Found!");
-                }
+            Node current = head;
+            Node prev = head;
+            while(current.student_id != id && current.next != null){
+                prev = current;
+                current = current.next;
             }
+            if(current.student_id == id && current == head){
+                Node del = current;
+                popFront();
+                return del;
+            }else if(current.student_id == id && current.next == null){
+                Node del = current;
+                popBack();
+                return del;
+            }else if (current.student_id == id && current != head && current.next != null){
+                Node del = current;
+                prev.next = current.next;
+                current.next = null;
+                return del;
+            }else return new Node("Student Not Found!");
         }
     }
     
